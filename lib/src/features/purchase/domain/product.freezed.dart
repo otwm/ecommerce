@@ -33,7 +33,7 @@ mixin _$Product {
   int get price => throw _privateConstructorUsedError;
 
   /// 할인율
-  int? get discountPercentage => throw _privateConstructorUsedError;
+  double? get discountPercentage => throw _privateConstructorUsedError;
 
   /// rating
   double? get rating => throw _privateConstructorUsedError;
@@ -68,7 +68,7 @@ abstract class $ProductCopyWith<$Res> {
       String title,
       String? description,
       int price,
-      int? discountPercentage,
+      double? discountPercentage,
       double? rating,
       int? stock,
       String? brand,
@@ -122,7 +122,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       discountPercentage: freezed == discountPercentage
           ? _value.discountPercentage
           : discountPercentage // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -163,7 +163,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String title,
       String? description,
       int price,
-      int? discountPercentage,
+      double? discountPercentage,
       double? rating,
       int? stock,
       String? brand,
@@ -215,7 +215,7 @@ class __$$ProductImplCopyWithImpl<$Res>
       discountPercentage: freezed == discountPercentage
           ? _value.discountPercentage
           : discountPercentage // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -246,7 +246,7 @@ class __$$ProductImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProductImpl implements _Product {
+class _$ProductImpl extends _Product {
   _$ProductImpl(
       {this.id,
       required this.title,
@@ -259,7 +259,11 @@ class _$ProductImpl implements _Product {
       required this.category,
       this.thumbnail,
       final List<String>? images})
-      : _images = images;
+      : assert(price >= 0, 'price must be greater than or equal to 0'),
+        assert(discountPercentage == null || discountPercentage >= 0,
+            'discountPercentage must be greater than or equal to 0'),
+        _images = images,
+        super._();
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -282,7 +286,7 @@ class _$ProductImpl implements _Product {
 
   /// 할인율
   @override
-  final int? discountPercentage;
+  final double? discountPercentage;
 
   /// rating
   @override
@@ -322,44 +326,6 @@ class _$ProductImpl implements _Product {
     return 'Product(id: $id, title: $title, description: $description, price: $price, discountPercentage: $discountPercentage, rating: $rating, stock: $stock, brand: $brand, category: $category, thumbnail: $thumbnail, images: $images)';
   }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProductImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.discountPercentage, discountPercentage) ||
-                other.discountPercentage == discountPercentage) &&
-            (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.stock, stock) || other.stock == stock) &&
-            (identical(other.brand, brand) || other.brand == brand) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
-            (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail) &&
-            const DeepCollectionEquality().equals(other._images, _images));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      title,
-      description,
-      price,
-      discountPercentage,
-      rating,
-      stock,
-      brand,
-      category,
-      thumbnail,
-      const DeepCollectionEquality().hash(_images));
-
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
@@ -374,19 +340,20 @@ class _$ProductImpl implements _Product {
   }
 }
 
-abstract class _Product implements Product {
+abstract class _Product extends Product {
   factory _Product(
       {final int? id,
       required final String title,
       final String? description,
       required final int price,
-      final int? discountPercentage,
+      final double? discountPercentage,
       final double? rating,
       final int? stock,
       final String? brand,
       required final String category,
       final String? thumbnail,
       final List<String>? images}) = _$ProductImpl;
+  _Product._() : super._();
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
@@ -409,7 +376,7 @@ abstract class _Product implements Product {
   @override
 
   /// 할인율
-  int? get discountPercentage;
+  double? get discountPercentage;
   @override
 
   /// rating

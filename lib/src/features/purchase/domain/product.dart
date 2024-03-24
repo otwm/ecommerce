@@ -5,6 +5,11 @@ part 'product.g.dart';
 
 @freezed
 class Product with _$Product {
+  const Product._();
+
+  @Assert('price >= 0', 'price must be greater than or equal to 0')
+  @Assert('discountPercentage == null || discountPercentage >= 0',
+      'discountPercentage must be greater than or equal to 0')
   factory Product({
     /// id
     int? id,
@@ -19,7 +24,7 @@ class Product with _$Product {
     required int price,
 
     /// 할인율
-    int? discountPercentage,
+    double? discountPercentage,
 
     /// rating
     double? rating,
@@ -42,4 +47,10 @@ class Product with _$Product {
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
+
+  @override
+  bool operator ==(other) => other is Product && other.id == id;
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
 }

@@ -93,13 +93,14 @@ class __$$CartImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CartImpl implements _Cart {
-  _$CartImpl({required final Set<CartItem> items}) : _items = items;
+  _$CartImpl({final Set<CartItem> items = const {}}) : _items = items;
 
   factory _$CartImpl.fromJson(Map<String, dynamic> json) =>
       _$$CartImplFromJson(json);
 
   final Set<CartItem> _items;
   @override
+  @JsonKey()
   Set<CartItem> get items {
     if (_items is EqualUnmodifiableSetView) return _items;
     // ignore: implicit_dynamic_type
@@ -139,7 +140,7 @@ class _$CartImpl implements _Cart {
 }
 
 abstract class _Cart implements Cart {
-  factory _Cart({required final Set<CartItem> items}) = _$CartImpl;
+  factory _Cart({final Set<CartItem> items}) = _$CartImpl;
 
   factory _Cart.fromJson(Map<String, dynamic> json) = _$CartImpl.fromJson;
 

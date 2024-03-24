@@ -6,6 +6,8 @@ part 'cart_item.g.dart';
 
 @freezed
 class CartItem with _$CartItem {
+  const CartItem._();
+
   factory CartItem({
     required Product product,
     required int quantity,
@@ -13,4 +15,10 @@ class CartItem with _$CartItem {
 
   factory CartItem.fromJson(Map<String, dynamic> json) =>
       _$CartItemFromJson(json);
+
+  @override
+  bool operator ==(other) => other is CartItem && other.product == product;
+
+  @override
+  int get hashCode => Object.hash(runtimeType, product);
 }
