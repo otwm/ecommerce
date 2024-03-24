@@ -6,32 +6,28 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
+  const User._();
+
+  @Assert('(age ?? 1) >= 1', 'age must be greater than or equal to 1')
   const factory User({
     int? id,
     String? firstName,
     String? lastName,
-    String? maidenName,
     int? age,
-    required String gender,
+    String? gender,
     String? email,
     String? phone,
     required String username,
-    required String password,
     String? birthDate,
     String? image,
-    String? bloodGroup,
-    int? height,
-    double? weight,
-    String? eyeColor,
-    String? domain,
-    String? ip,
     Address? address,
-    String? macAddress,
-    String? university,
-    String? ein,
-    String? ssn,
-    String? userAgent,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  @override
+  bool operator ==(other) => other is User && other.id == id;
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
 }
